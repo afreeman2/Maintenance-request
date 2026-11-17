@@ -360,3 +360,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+# ملفات الفحص المؤقتة وإعدادات الاتصال المحلية لا تُرفع إلى المستودع.
+/tmp/
