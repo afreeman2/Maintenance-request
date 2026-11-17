@@ -1,0 +1,158 @@
+<mah:MetroWindow x:Class="Maintenance_request.user_requst_windows.Config_Request_Window" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks" 
+                 Title="تعديل طلب صيانة" dx:ThemeManager.ThemeName="Win11Light" 
+                 Width="1180" Height="800" ShowInTaskbar="False" 
+                 WindowStartupLocation="CenterOwner" Background="Transparent" BorderThickness="0"
+                 AllowsTransparency="True" WindowStyle="None" ShowTitleBar="False" 
+                 ShowCloseButton="False" ShowMinButton="False" ShowMaxRestoreButton="False"
+                 WindowButtonCommandsOverlayBehavior="Never" Language="ar-LY" FlowDirection="RightToLeft"
+                 FontFamily="Segoe UI" FontSize="15" Loaded="Request_Window_Loaded" ResizeMode="NoResize">
+
+    <!-- تتحرك اللوحتان من الأسفل، وتستقر كل بطاقة في وسط مساحة النافذة المالكة. -->
+    <mah:MetroWindow.Flyouts>
+        <mah:FlyoutsControl>
+            <mah:Flyout x:Name="adv_searsh" Position="Bottom" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" IsModal="True" Background="Transparent" HeaderTemplate="{StaticResource Client.FlyoutHeader}" ClosingFinished="Search_Closed" AnimateOpacity="True" TitleVisibility="Collapsed" CloseButtonVisibility="Collapsed" Padding="0" HorizontalContentAlignment="Stretch" FocusedElement="{Binding ElementName=Date_Begin}">
+                <Border x:Name="SearchCard" Style="{StaticResource Client.Card}" MaxWidth="1040" VerticalAlignment="Center" Margin="22" Padding="0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border Background="{StaticResource Client.Header}" CornerRadius="16,16,0,0" Padding="20,14">
+                            <DockPanel>
+                                <Button DockPanel.Dock="Right" Click="cancel_search_Click"  Width="40" Style="{StaticResource Client.Secondary}" Padding="0">
+                                    <Path Width="16" Height="16" Stretch="Uniform" Data="M0,0 L16,16 M16,0 L0,16" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                                </Button>
+                                <TextBlock Text="البحث في طلباتي القابلة للتعديل" Foreground="White" FontSize="21" VerticalAlignment="Center"/>
+                            </DockPanel>
+                        </Border>
+                        <Grid Grid.Row="1" Margin="22">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Margin="0,0,12,0">
+                                <TextBlock Text="من تاريخ" Style="{StaticResource Client.Label}"/>
+                                <DatePicker x:Name="Date_Begin" Style="{StaticResource Client.Input}"/>
+                                <TextBlock Style="{StaticResource Client.ErrorText}" Tag="{Binding ElementName=Date_Begin}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="0,0,12,0">
+                                <TextBlock Text="إلى تاريخ" Style="{StaticResource Client.Label}"/>
+                                <DatePicker x:Name="Date_End" Style="{StaticResource Client.Input}"/>
+                                <TextBlock Style="{StaticResource Client.ErrorText}" Tag="{Binding ElementName=Date_End}"/>
+                            </StackPanel>
+                            <Button x:Name="Search_data" Grid.Column="2" Click="Search_data_Click" Content="بحث" Style="{StaticResource Client.Button}" VerticalAlignment="Bottom" MinWidth="100"/>
+                        </Grid>
+                        <dxg:GridControl x:Name="Search_Grid" Grid.Row="2" Margin="22,0,22,22" Height="280" AutoGenerateColumns="None" MouseDoubleClick="Search_Grid_MouseDoubleClick">
+                            <dxg:GridControl.View>
+                                <dxg:TableView AutoWidth="True" AllowEditing="False" ShowGroupPanel="False" ShowIndicator="False" RowMinHeight="44"/>
+                            </dxg:GridControl.View>
+                            <dxg:GridColumn FieldName="ndate" Header="التاريخ" HorizontalHeaderContentAlignment="Center">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings DisplayFormat="dd/MM/yyyy" HorizontalContentAlignment="Center"/>
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="Serv_type" Header="الخدمة" HorizontalHeaderContentAlignment="Center">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="Description" Header="تفاصيل الطلب" HorizontalHeaderContentAlignment="Center">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                        </dxg:GridControl>
+                    </Grid>
+                </Border>
+            </mah:Flyout>
+            <!-- محرر الطلب نفسه لوحة من الأسفل، وتعريف أدواته بالكامل في XAML مثل المرجع المعتمد. -->
+            <mah:Flyout x:Name="EditorPanel" Position="Bottom" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" IsOpen="True" IsPinned="True" IsModal="False" Background="Transparent" HeaderTemplate="{StaticResource Client.FlyoutHeader}" AnimateOpacity="True" TitleVisibility="Collapsed" CloseButtonVisibility="Collapsed" Padding="0" HorizontalContentAlignment="Stretch">
+                <Border x:Name="EditorCard" MaxWidth="1080" VerticalAlignment="Center" CornerRadius="18" Background="{StaticResource Client.Canvas}" BorderBrush="{StaticResource Client.Line}" BorderThickness="1" Margin="0,25">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="76"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid Margin="50,0,24,0" MaxWidth="1000" VerticalAlignment="Center" Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="1" Style="{StaticResource Client.Card}" Padding="26">
+                                <StackPanel x:Name="FormPanel">
+                                    <TextBlock Style="{StaticResource Client.Label}" Text="نوع الصيانة"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="36"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <icons:PackIconMaterial Kind="Tools" Foreground="{StaticResource Client.Blue}" Width="22" Height="22" VerticalAlignment="Center"/>
+                                        <ComboBox Grid.Column="1" x:Name="_Combo_Types" Style="{StaticResource Client.Input}" DisplayMemberPath="Serv_type" SelectedValuePath="Serv_num" IsTextSearchEnabled="True" PreviewKeyUp="_Combo_Types_PreviewKeyUp"/>
+                                    </Grid>
+                                    <TextBlock Style="{StaticResource Client.ErrorText}" Tag="{Binding ElementName=_Combo_Types}"/>
+                                    <TextBlock Style="{StaticResource Client.Label}" Text="تفاصيل طلب الصيانة" Margin="0,24,0,8"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="36"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <icons:PackIconMaterial Kind="TextBoxOutline" Foreground="{StaticResource Client.Blue}" Width="22" Height="22" VerticalAlignment="Top" Margin="0,12,0,0"/>
+                                        <TextBox Grid.Column="1" x:Name="TxtName" Style="{StaticResource Client.Input}" MinHeight="145" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+                                    </Grid>
+                                    <TextBlock Style="{StaticResource Client.ErrorText}" Tag="{Binding ElementName=TxtName}"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                        <Border Background="{StaticResource Client.Header}" CornerRadius="18,18,0,0" Padding="24,0">
+                            <DockPanel>
+                                <Button DockPanel.Dock="Right" Click="btnCancel_Click"  FontSize="25" Width="44" Style="{StaticResource Client.Button}" Background="Transparent" Padding="0" Height="47">
+                                    <Path Width="16" Height="16" Stretch="Uniform" Data="M0,0 L16,16 M16,0 L0,16" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                                </Button>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <icons:PackIconMaterial Kind="ClipboardEditOutline" Foreground="#E2C58E" Width="28" Height="28" Margin="0,0,12,0"/>
+                                    <TextBlock Text="تعديل طلب صيانة" Foreground="White" FontSize="25" FontWeight="SemiBold"/>
+                                </StackPanel>
+                            </DockPanel>
+                        </Border>
+                        <Border Grid.Row="2" Background="White" CornerRadius="0,0,18,18" Padding="26,16" BorderBrush="{StaticResource Client.Line}" BorderThickness="0,1,0,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <dx:WaitIndicator x:Name="LoadingIndicator" DeferedVisibility="False" Margin="12,0"/>
+                                </StackPanel>
+                                <WrapPanel Grid.Column="1">
+                                    <Button Click="Search_Request_Click" Style="{StaticResource Client.Secondary}" Margin="0,0,8,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <icons:PackIconMaterial Kind="Magnify" Width="20" Height="20" Margin="0,0,8,0"/>
+                                            <TextBlock Text="البحث عن طلب"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button x:Name="Delete_Request" Click="Delete_Request_Click" Style="{StaticResource Client.Secondary}" Foreground="#B42318" Margin="0,0,8,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <icons:PackIconMaterial Kind="Cancel" Width="20" Height="20" Margin="0,0,8,0"/>
+                                            <TextBlock Text="إلغاء الطلب"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button x:Name="save_Request" Click="save_Request_Click" Style="{StaticResource Client.Button}" MinWidth="160">
+                                        <StackPanel Orientation="Horizontal">
+                                            <icons:PackIconMaterial Kind="SendOutline" Width="21" Height="21" Margin="0,0,8,0"/>
+                                            <TextBlock Text="حفظ التعديل"/>
+                                        </StackPanel>
+                                    </Button>
+                                </WrapPanel>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+            </mah:Flyout>
+        </mah:FlyoutsControl>
+    </mah:MetroWindow.Flyouts>
+
+    <Grid Background="#550F2036"/>
+</mah:MetroWindow>

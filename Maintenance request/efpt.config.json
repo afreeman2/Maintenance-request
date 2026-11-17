@@ -1,0 +1,86 @@
+﻿{
+   "CodeGenerationMode": 6,
+   "ContextClassName": "Cont_maintContext",
+   "ContextNamespace": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "IrregularWords": null,
+   "MinimumProductVersion": "2.6.1604",
+   "ModelNamespace": "",
+   "OutputContextPath": "database_cotext",
+   "OutputPath": "data",
+   "PluralRules": null,
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "Maintenance_request",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "SingularRules": null,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[T_Build]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[T_Emergency_MaintenanceCosts]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[T_Maintenance_Request]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[T_Maintenance_request_Users]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[T_Mangment_Request]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[T_Notif_Action]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[T_Notif_Action_Users]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[T_Request_notification]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[T_Service]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": true,
+   "UseDatabaseNamesForRoutines": true,
+   "UseDateOnlyTimeOnly": true,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseInternalAccessModifiersForSprocsAndFunctions": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false,
+   "UseT4Split": false,
+   "UseTypedTvpParameters": true
+}
